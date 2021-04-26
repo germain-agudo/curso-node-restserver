@@ -1,12 +1,17 @@
 const express = require('express')
 const cors = require('cors');
 
+const { dbConnection } = require('../database/config');
+
 class Server{
 
     constructor(){
         this.app = express();
         this.port= process.env.PORT;
         this.usuariosPath = '/api/usuarios'
+
+        //Conectar a base de datos
+        this.conectarDB();
 
         /* Middleweares :+ Funciones que vana  añadirle otra funcionalidad a mi web serer
         en pocas palabras es como una funcion que siempre se va a ejecutara cuando se levate mi webserver
@@ -15,6 +20,10 @@ class Server{
 
         //Rutas de la aplicación
         this.routes();
+    }
+
+    async conectarDB(){
+        await dbConnection();
     }
 
     middleweares(){
